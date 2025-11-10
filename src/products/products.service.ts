@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Product } from './schemas/products.schema';
@@ -18,9 +18,62 @@ export class ProductsService {
     const updatedProduct = await this.productModel.findByIdAndUpdate(id, { $set: updateProductDto}, { new: true }).exec();
 
     if (!updatedProduct) {
-      throw new Error('Product not found');
+      throw new NotFoundException(`Product with id ${id} not found`);
     }
 
     return updatedProduct;
+  }
+
+
+  async findAll(query: {
+    page?: number;
+    limit?: number;
+    category?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    search?: string;
+  }) {
+    const { page = 1, limit = 10, category, minPrice, maxPrice, search } = query;
+
+    const skip = (page - 1) * limit;
+
+    const filter: Record<string, any> = {};
+
+    if (category) {
+      filter.category = category;
+    }
+
+    if (minPrice || maxPrice) {
+      filter.price = {};
+      if (minPrice) filter.price.$gte = minPrice;
+      if (maxPrice) filter.price.$lte = maxPrice;
+    }
+
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: 'i' } }, // case-insensitive search
+        { description: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    const [products, totalProducts] = await Promise.all([
+      this.productModel
+        .find(filter, { name: 1, price: 1, stock: 1, category: 1 })
+        .skip(skip)
+        .limit(limit)
+        .lean()
+        .exec(),
+      this.productModel.countDocuments(filter).exec(),
+    ]);
+
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    return {
+      currentPage: page,
+      pageSize: limit,
+      totalPages,
+      totalProducts,
+      products,
+    };
   }
 }
