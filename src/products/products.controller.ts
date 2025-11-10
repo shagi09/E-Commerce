@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards,Put,Param,Get,Query } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards,Put,Param,Get,Query,Delete } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -55,6 +55,27 @@ export class ProductsController {
       statusCode: 200,
       message: 'Products fetched successfully',
       ...data,
+    };
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    const product = await this.productsService.findOne(id);
+    return {
+      statusCode: 200,
+      message: 'Product fetched successfully',
+      data: product,
+    };
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  async delete(@Param('id') id: string) {
+    const product = await this.productsService.delete(id);
+    return {
+      statusCode: 200,
+      message: 'Product deleted successfully',
+      data: product,
     };
   }
 }
