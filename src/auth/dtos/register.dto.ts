@@ -1,6 +1,8 @@
 // src/modules/auth/dto/register.dto.ts
-import { IsEmail, IsNotEmpty, Matches, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, Matches, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from 'src/users/schemas/users.shema';
+import { UserRole } from 'src/users/schemas/users.shema';
 
 export class RegisterDto {
 @ApiProperty()
@@ -25,4 +27,7 @@ export class RegisterDto {
     message: 'Password must contain at least one special character',
   })
   password: string;
+
+  role?:UserRole;
+
 }

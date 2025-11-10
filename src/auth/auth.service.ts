@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dtos/register.dto';
+import { LoginDto } from './dtos/login.dto';
 //import { LoginDto } from 'src/users/dto/login.dto';
 
 @Injectable()
@@ -18,13 +19,20 @@ async signup(dto: RegisterDto) {
   if (existing) {
     throw new UnauthorizedException('User already exists');
   }
+  const existingUsername = await this.usersService.findByUsername(dto.username)
+  if (existingUsername) {
+    throw new UnauthorizedException('Username already exists');
+  }
+
+  const role = dto.role || 'user';
 
   const hash = await bcrypt.hash(dto.password, 10);
 
   const user = await this.usersService.create({
     email: dto.email,
     username: dto.username,
-    passwordHash: hash,
+    password: hash,
+    role: dto.role ,
   });
 
   console.log('User created:', user);
@@ -33,7 +41,7 @@ async signup(dto: RegisterDto) {
 }
 
 signPayload(user: any) {
-  const payload = { sub: user._id.toString(), email: user.email };
+  const payload = { sub: user._id.toString(), email: user.email,role: user.role };
   const accessToken = this.jwtService.sign(payload);
 
   return {
@@ -42,18 +50,19 @@ signPayload(user: any) {
       id: payload.sub,
       email: user.email,
       username: user.username,
+      role: user.role
     },
   };
 }
 
 
-//   async login(dto: LoginDto) {
-//     const user = await this.usersService.findByEmail(dto.email);
-//     if (!user || !user.passwordHash) throw new UnauthorizedException('Invalid credentials');
-//     const ok = await bcrypt.compare(dto.password, user.passwordHash);
-//     if (!ok) throw new UnauthorizedException('Invalid credentials');
-//     return this.signPayload(user);
-//   }
+  async login(dto: LoginDto) {
+    const user = await this.usersService.findByEmail(dto.email);
+    if (!user || !user.password) throw new UnauthorizedException('Invalid credentials');
+    const ok = await bcrypt.compare(dto.password, user.password);
+    if (!ok) throw new UnauthorizedException('Invalid credentials');
+    return this.signPayload(user);
+  }
 
 
 

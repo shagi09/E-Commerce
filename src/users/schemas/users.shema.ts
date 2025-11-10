@@ -5,6 +5,9 @@ import { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
 
+export type UserRole = 'user' | 'admin';
+
+
 @Schema({ timestamps: true })
 export class User extends Document {
   
@@ -16,6 +19,8 @@ export class User extends Document {
 
   @Prop({ required: true })
   password: string;
+
+  role: { type: String, enum: ['user', 'admin'], default: 'user' }
 
   createdAt: Date;
   updatedAt: Date;

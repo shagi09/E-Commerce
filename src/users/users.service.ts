@@ -3,13 +3,14 @@ import * as bcrypt from 'bcrypt'
 import {User,UserDocument} from "./schemas/users.shema";
 import { InjectModel } from '@nestjs/mongoose';
 import { Model,Types } from 'mongoose';
+import { UserRole } from './schemas/users.shema';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-    async create(payload: { email: string; passwordHash?: string; username?: string }): Promise<User> {
-    const created = new this.userModel(payload);
+    async create(payload: { email: string; password: string; username: string; role?: UserRole }): Promise<User> {
+    const created = new this.userModel({ ...payload ,role: payload.role ?? 'user'});
     return created.save();
   }
 //   async findById(id: string): Promise<User> {
@@ -21,6 +22,10 @@ export class UsersService {
 //   }
 async findByEmail(email: string): Promise<User | null> {
   return this.userModel.findOne({ email }).exec(); // returns null if not found
+}
+
+async findByUsername(username: string): Promise<User | null> {
+  return this.userModel.findOne({ username }).exec();
 }
 
 
