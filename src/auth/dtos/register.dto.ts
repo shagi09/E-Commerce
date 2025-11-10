@@ -1,17 +1,21 @@
 // src/modules/auth/dto/register.dto.ts
 import { IsEmail, IsNotEmpty, Matches, MinLength } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class RegisterDto {
+@ApiProperty()
   @IsNotEmpty({ message: 'Username is required' })
   @Matches(/^[a-zA-Z0-9]+$/, {
     message: 'Username must be alphanumeric without spaces or special characters',
   })
   username: string;
 
+  @ApiProperty()
   @IsNotEmpty({ message: 'Email is required' })
   @IsEmail({}, { message: 'Invalid email format' })
   email: string;
 
+  @ApiProperty()
   @IsNotEmpty({ message: 'Password is required' })
   @MinLength(8, { message: 'Password must be at least 8 characters long' })
   @Matches(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
