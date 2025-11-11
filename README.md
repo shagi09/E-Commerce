@@ -36,24 +36,15 @@ It includes:
 
 ---
 
-#### Project Structure
-
-src/
-├── auth/                # JWT authentication and role guards
-├── users/               # User management
-├── products/            # Product management
-├── orders/              # Orders and checkout
-├── common/              # Shared filters, pipes, interceptors
-└── config/              # Environment and configuration
 
 
-##### Project setup
+#### Project setup
 
 - git clone https://github.com/shagi09/E-Commerce.git
 - cd E-commerce
 
 env
-- MONGODB_URI=mongodb+srv://shala:shalom1994@cluster0.m4sss.mongodb.net/ecommerce
+- MONGODB_URI=mongodb+srv://username:password@cluster0.m4sss.mongodb.net/ecommerce
 - MONGO_DB_NAME=ecommerce
 - PORT=3000
 - JWT_SECRET=super-secret-key
@@ -67,7 +58,7 @@ env
 $ npm install
 ```
 
-###### Compile and run the project
+##### Compile and run the project
 
 ```bash
 # development
