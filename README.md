@@ -43,28 +43,20 @@ It includes:
 - git clone https://github.com/shagi09/E-Commerce.git
 - cd E-commerce
 
-```bash
-$ npm install
-```
+
+ npm install
 
 #### Compile and run the project
 
-```bash
-# development
-$ npm run start
 
 # watch mode
-$ npm run start --watch
-
-# production mode
-$ npm run start:prod
-```
+npm run start --watch
 
 ##### Environment Variables
 
 Create a `.env` file in the root folder:
 
-```dotenv
+dotenv
 MONGO_URI=mongodb+srv://username:password@cluster0.m4sss.mongodb.net/ecommerce
 MONGO_DB_NAME=ecommerce
 PORT=3000
@@ -72,14 +64,13 @@ JWT_SECRET=super-secret-key
 
 
 
-
 ###### API Endpoints
 
-#### Auth
+###### Auth
 - `POST /auth/signup` – register user (role: user/admin)
 - `POST /auth/login` – login user
 
-#### Products
+###### Products
 - `GET /products` – list all products (public)
 - `GET /products/:id` – get specific product (public)
 - `POST /products/create` – create product (admin)
