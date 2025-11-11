@@ -20,7 +20,8 @@ export class User extends Document {
   @Prop({ required: true })
   password: string;
 
-  role: { type: String, enum: ['user', 'admin'], default: 'user' }
+  @Prop({ type: String, enum: ['user', 'admin'],default: 'user' })
+  role: 'user' | 'admin';
 
   createdAt: Date;
   updatedAt: Date;

@@ -24,15 +24,13 @@ async signup(dto: RegisterDto) {
     throw new UnauthorizedException('Username already exists');
   }
 
-  const role = dto.role || 'user';
-
   const hash = await bcrypt.hash(dto.password, 10);
 
   const user = await this.usersService.create({
     email: dto.email,
     username: dto.username,
     password: hash,
-    role: dto.role ,
+    role: dto.role || 'user',
   });
 
   console.log('User created:', user);

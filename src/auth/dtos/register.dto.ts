@@ -1,5 +1,5 @@
 // src/modules/auth/dto/register.dto.ts
-import { IsEmail, IsNotEmpty, IsOptional, Matches, MinLength } from 'class-validator';
+import { IsEmail, IsIn, IsNotEmpty, IsOptional, Matches, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'src/users/schemas/users.shema';
 import { UserRole } from 'src/users/schemas/users.shema';
@@ -28,6 +28,7 @@ export class RegisterDto {
   })
   password: string;
 
-  role?:UserRole;
+  @IsOptional()
+  role?:'user' | 'admin';
 
 }

@@ -2,16 +2,17 @@ import { Body, Controller, Post, UseGuards,Put,Param,Get,Query,Delete } from '@n
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../commons/guards/roles.guard';
 import { Roles } from '../decorators/roles.decorator';
 import { UpdateProductDto } from './dtos/update-product.dto';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post('create')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   async create(@Body() dto: CreateProductDto) {
     const product = await this.productsService.create(dto);
     return {
@@ -22,7 +23,8 @@ export class ProductsController {
   }
 
   @Put(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   async update(@Param('id') id: string, @Body() dto: UpdateProductDto) {
     const product = await this.productsService.update(id, dto);
     return {
@@ -69,7 +71,8 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   async delete(@Param('id') id: string) {
     const product = await this.productsService.delete(id);
     return {
