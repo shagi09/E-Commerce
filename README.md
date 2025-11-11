@@ -96,16 +96,16 @@ ecommerce-api/
 
 ##### Project setup
 
-git clone https://github.com/shagi09/E-Commerce.git
-cd E-commerce
+- git clone https://github.com/shagi09/E-Commerce.git
+- cd E-commerce
 
 env
-MONGODB_URI=mongodb+srv://shala:shalom1994@cluster0.m4sss.mongodb.net/ecommerce
-MONGO_DB_NAME=ecommerce
-PORT=3000
-JWT_SECRET=super-secret-key
+- MONGODB_URI=mongodb+srv://shala:shalom1994@cluster0.m4sss.mongodb.net/ecommerce
+- MONGO_DB_NAME=ecommerce
+- PORT=3000
+- JWT_SECRET=super-secret-key
 
-swagger docs available at http://localhost:3000/api/docs
+- swagger docs available at http://localhost:3000/api/docs
 
 
 
