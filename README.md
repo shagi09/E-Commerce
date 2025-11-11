@@ -38,60 +38,13 @@ It includes:
 
 #### Project Structure
 
-ecommerce-api/
-├── src/
-│   ├── app.module.ts                   # Root module
-│   ├── main.ts                         # Application bootstrap
-│   │
-│   ├── auth/                           # Authentication & Authorization
-│   │   ├── auth.module.ts
-│   │   ├── auth.service.ts
-│   │   ├── auth.controller.ts
-│   │   ├── jwt.strategy.ts
-│   │   ├── jwt-auth.guard.ts
-│   │   ├── roles.guard.ts
-│   │   └── decorators/
-│   │       └── roles.decorator.ts
-│   │
-│   ├── users/                          # User Management
-│   │   ├── users.module.ts
-│   │   ├── users.service.ts
-│   │   ├── users.controller.ts
-|   |   |
-│   │   └── schemas/
-│   │       └── user.schema.ts
-│   │
-│   ├── products/                       # Product Management
-│   │   ├── products.module.ts
-│   │   ├── products.service.ts
-│   │   ├── products.controller.ts
-│   │   ├── dto/
-│   │   │   ├── create-product.dto.ts
-│   │   │   └── update-product.dto.ts
-│   │   └── schemas/
-│   │       └── product.schema.ts
-│   │
-│   ├── orders/                         # Orders & Checkout
-│   │   ├── orders.module.ts
-│   │   ├── orders.service.ts
-│   │   ├── orders.controller.ts
-│   │   ├── dto/
-│   │   │   └── create-order.dto.ts
-│   │   └── schemas/
-│   │       └── order.schema.ts
-│   │
-|   |
-│   │
-│   └── config/                         # Configuration & environment
-│       └── configuration.ts
-│
-|                             
-│
-├── .env                                # Environment variables
-├── nest-cli.json
-├── package.json
-├── tsconfig.json
-└── README.md
+src/
+├── auth/                # JWT authentication and role guards
+├── users/               # User management
+├── products/            # Product management
+├── orders/              # Orders and checkout
+├── common/              # Shared filters, pipes, interceptors
+└── config/              # Environment and configuration
 
 
 ##### Project setup
