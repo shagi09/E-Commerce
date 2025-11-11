@@ -43,13 +43,15 @@ It includes:
 - git clone https://github.com/shagi09/E-Commerce.git
 - cd E-commerce
 
-env
-- MONGODB_URI=mongodb+srv://username:password@cluster0.m4sss.mongodb.net/ecommerce
-- MONGO_DB_NAME=ecommerce
-- PORT=3000
-- JWT_SECRET=super-secret-key
+##### Environment Variables
 
-- swagger docs available at http://localhost:3000/api/docs
+Create a `.env` file in the root folder:
+
+```dotenv
+MONGO_URI=mongodb+srv://username:password@cluster0.m4sss.mongodb.net/ecommerce
+MONGO_DB_NAME=ecommerce
+PORT=3000
+JWT_SECRET=super-secret-key
 
 
 
@@ -58,7 +60,7 @@ env
 $ npm install
 ```
 
-##### Compile and run the project
+###### Compile and run the project
 
 ```bash
 # development
@@ -70,4 +72,29 @@ $ npm run start --watch
 # production mode
 $ npm run start:prod
 ```
+
+2. **Endpoints / API Documentation**
+   - Include a small section with **main endpoints**, HTTP methods, and authentication/roles. For example:
+
+```markdown
+### API Endpoints
+
+#### Auth
+- `POST /auth/signup` – register user (role: user/admin)
+- `POST /auth/login` – login user
+
+#### Products
+- `GET /products` – list all products (public)
+- `GET /products/:id` – get specific product (public)
+- `POST /products/create` – create product (admin)
+- `PUT /products/:id` – update product (admin)
+- `DELETE /products/:id` – delete product (admin)
+
+#### Orders
+- `POST /orders` – create order (authenticated users)
+- `GET /orders` – get user's orders (authenticated users)
+
+![NestJS](https://img.shields.io/badge/NestJS-8.0-red)
+![MongoDB](https://img.shields.io/badge/MongoDB-4.4-green)
+![License](https://img.shields.io/badge/license-MIT-blue)
 
