@@ -70,4 +70,8 @@ export class OrdersService {
       session.endSession();
     }
   }
+
+  async getOrders(userId: string) {
+    return this.orderModel.find({ userId }).exec();
+  }
 }
