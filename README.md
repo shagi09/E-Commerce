@@ -43,6 +43,23 @@ It includes:
 - git clone https://github.com/shagi09/E-Commerce.git
 - cd E-commerce
 
+```bash
+$ npm install
+```
+
+#### Compile and run the project
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start --watch
+
+# production mode
+$ npm run start:prod
+```
+
 ##### Environment Variables
 
 Create a `.env` file in the root folder:
@@ -56,26 +73,7 @@ JWT_SECRET=super-secret-key
 
 
 
-```bash
-$ npm install
-```
-
-###### Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start --watch
-
-# production mode
-$ npm run start:prod
-```
-
-2. **Endpoints / API Documentation**
-
-### API Endpoints
+###### API Endpoints
 
 #### Auth
 - `POST /auth/signup` – register user (role: user/admin)
