@@ -74,9 +74,7 @@ $ npm run start:prod
 ```
 
 2. **Endpoints / API Documentation**
-   - Include a small section with **main endpoints**, HTTP methods, and authentication/roles. For example:
 
-```markdown
 ### API Endpoints
 
 #### Auth
@@ -94,7 +92,5 @@ $ npm run start:prod
 - `POST /orders` – create order (authenticated users)
 - `GET /orders` – get user's orders (authenticated users)
 
-![NestJS](https://img.shields.io/badge/NestJS-8.0-red)
-![MongoDB](https://img.shields.io/badge/MongoDB-4.4-green)
-![License](https://img.shields.io/badge/license-MIT-blue)
+
 
