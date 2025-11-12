@@ -14,6 +14,7 @@ It includes:
 - Role-based access control (user / admin)
 - Product management (CRUD) — Admin-only endpoints
 - product list and details
+- product image upload
 - Order placement with stock validation and transactions
 - Order management
 - MongoDB integration
