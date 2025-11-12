@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MinLength, MaxLength, IsNumber, IsPositive, IsInt, Min } from 'class-validator';
+import { IsNotEmpty, IsString, MinLength, MaxLength, IsNumber, IsPositive, IsInt, Min ,IsOptional} from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateProductDto {
   @ApiProperty()
@@ -17,11 +18,13 @@ export class CreateProductDto {
 
   @ApiProperty()
   @IsNumber()
+  @Type(() => Number)
   @IsPositive({ message: 'Price must be greater than 0' })
   price: number;
 
   @ApiProperty()
   @IsInt()
+  @Type(()=>Number)
   @Min(0, { message: 'Stock must be 0 or greater' })
   stock: number;
 
@@ -29,4 +32,8 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty({ message: 'Category is required' })
   category: string;
+
+  @ApiProperty({ type: 'string', format: 'binary', required: false })
+  @IsOptional()
+  image?: any;
 }

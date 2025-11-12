@@ -5,16 +5,49 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../decorators/roles.decorator';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { UseInterceptors, UploadedFile } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { ApiConsumes } from '@nestjs/swagger';
+
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
-
   @Post('create')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
-  async create(@Body() dto: CreateProductDto) {
-    const product = await this.productsService.create(dto);
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './uploads/iamges',
+        filename: (req, file, cb) => {
+          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+          cb(null, `${uniqueSuffix}${extname(file.originalname)}`);
+        },
+      }),
+      fileFilter: (req, file, cb) => {
+        if (!file.mimetype.match(/\/(jpg|jpeg|png)$/)) {
+          cb(new Error('Only image files are allowed!'), false);
+        } else {
+          cb(null, true);
+        }
+      },
+    }),
+  )
+  async create(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() dto: CreateProductDto,
+  ) {
+    const imagePath = file ? `/uploads/iamges/${file.filename}` : null;
+
+    const product = await this.productsService.create({
+      ...dto,
+      image: imagePath,
+    });
+
     return {
       statusCode: 201,
       message: 'Product created successfully',
