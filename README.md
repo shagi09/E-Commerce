@@ -61,6 +61,8 @@ dotenv
 - PORT=3000
 - JWT_SECRET=super-secret-key
 
+---
+
 
 
 #### API Endpoints
